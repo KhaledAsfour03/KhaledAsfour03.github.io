@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Khaled Asfour — AI & Data Science</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #060810;
+  --bg2: #0e1018;
+  --bg3: #13161f;
+  --line: rgba(255,255,255,0.07);
+  --line2: rgba(255,255,255,0.13);
+  --accent: #c8f06c;
+  --accent2: #7eb8ff;
+  --text: #f0f0ee;
+  --muted: #6a6d78;
+  --serif: 'DM Serif Display', Georgia, serif;
+  --sans: 'Outfit', sans-serif;
+  --mono: 'DM Mono', monospace;
+}
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1.1rem 4rem;
+  border-bottom: 1px solid var(--line);
+  background: rgba(6,8,16,0.82);
+  backdrop-filter: blur(14px);
+}
+.nav-logo {
+  font-family: var(--mono); font-size: 13px; color: var(--accent);
+  letter-spacing: 0.1em; text-decoration: none;
+}
+.nav-links { display: flex; gap: 2.5rem; list-style: none; }
+.nav-links a {
+  font-size: 12px; color: var(--muted); text-decoration: none;
+  letter-spacing: 0.07em; text-transform: uppercase; font-weight: 500;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--text); }
+
+/* HERO */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex; align-items: center;
+  overflow: hidden;
+}
+#hero-canvas {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; z-index: 0;
+}
+.hero-content {
+  position: relative; z-index: 1;
+  padding: 8rem 4rem 4rem;
+  max-width: 600px;
+}
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(200,240,108,0.08); border: 1px solid rgba(200,240,108,0.22);
+  border-radius: 100px; padding: 5px 16px;
+  font-family: var(--mono); font-size: 11px; color: var(--accent);
+  letter-spacing: 0.07em; margin-bottom: 2rem;
+}
+.hero-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent); animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.2} }
+.hero h1 {
+  font-family: var(--serif);
+  font-size: clamp(3.5rem, 6vw, 6.5rem);
+  line-height: 1.0; letter-spacing: -0.02em; color: var(--text);
+}
+.hero h1 em { font-style: italic; color: rgba(240,240,238,0.28); }
+.hero-sub {
+  font-size: 1rem; color: var(--muted);
+  margin: 1.5rem 0 2.4rem; line-height: 1.8; max-width: 430px;
+}
+.hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+.btn {
+  display: inline-block; text-decoration: none;
+  padding: 0.65rem 1.6rem; border-radius: 6px;
+  font-size: 13px; font-weight: 600; letter-spacing: 0.03em;
+  transition: all 0.2s; cursor: pointer;
+}
+.btn-primary { background: var(--accent); color: var(--bg); }
+.btn-primary:hover { background: #d9f582; transform: translateY(-1px); }
+.btn-ghost { border: 1px solid var(--line2); color: var(--muted); background: transparent; }
+.btn-ghost:hover { border-color: rgba(255,255,255,0.22); color: var(--text); }
+
+/* SECTIONS */
+section { padding: 6rem 4rem; }
+.section-label {
+  font-family: var(--mono); font-size: 11px; color: var(--accent);
+  letter-spacing: 0.12em; text-transform: uppercase;
+  display: flex; align-items: center; gap: 10px; margin-bottom: 1rem;
+}
+.section-label::before { content: ''; display: block; width: 28px; height: 1px; background: var(--accent); }
+.section-title {
+  font-family: var(--serif); font-size: clamp(2rem, 3.5vw, 3rem);
+  line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 1rem;
+}
+.section-sub { color: var(--muted); max-width: 500px; margin-bottom: 3.5rem; font-size: 0.95rem; }
+.divider { border: none; border-top: 1px solid var(--line); margin: 0 4rem; }
+
+/* ABOUT */
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+.about-text p { color: rgba(240,240,238,0.68); margin-bottom: 1.2rem; line-height: 1.85; font-size: 0.97rem; }
+.about-right { display: flex; flex-direction: column; gap: 0.85rem; }
+.info-row {
+  display: flex; align-items: center; gap: 1rem;
+  padding: 0.85rem 1.2rem;
+  background: var(--bg2); border: 1px solid var(--line); border-radius: 8px;
+}
+.info-label { font-family: var(--mono); font-size: 11px; color: var(--muted); min-width: 72px; }
+.info-val { font-size: 13px; color: var(--text); }
+
+/* TIMELINE */
+.timeline { margin-top: 1.5rem; position: relative; padding-left: 1.5rem; }
+.timeline::before {
+  content: ''; position: absolute; left: 0; top: 6px; bottom: 0;
+  width: 1px; background: var(--line);
+}
+.tl-item { position: relative; padding-left: 1.5rem; padding-bottom: 2.2rem; }
+.tl-dot {
+  position: absolute; left: -1.93rem; top: 5px;
+  width: 9px; height: 9px; border-radius: 50%;
+  background: var(--accent); box-shadow: 0 0 0 3px rgba(200,240,108,0.12);
+}
+.tl-meta { font-family: var(--mono); font-size: 11px; color: var(--muted); margin-bottom: 0.3rem; }
+.tl-role { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.2rem; }
+.tl-org { font-size: 13px; color: var(--accent2); margin-bottom: 0.6rem; }
+.tl-list { list-style: none; }
+.tl-list li {
+  font-size: 13px; color: rgba(240,240,238,0.58);
+  padding: 0.25rem 0; display: flex; gap: 0.5rem; align-items: flex-start;
+}
+.tl-list li::before { content: '->'; color: var(--accent); font-size: 11px; margin-top: 2px; flex-shrink: 0; font-family: var(--mono); }
+
+/* PROJECTS */
+.projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+.proj-card {
+  background: var(--bg2); border: 1px solid var(--line);
+  border-radius: 14px; padding: 1.6rem;
+  display: flex; flex-direction: column;
+  position: relative; overflow: hidden;
+  transition: border-color 0.25s, transform 0.25s;
+}
+.proj-card::after {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0; transition: opacity 0.3s;
+}
+.proj-card:hover { border-color: rgba(255,255,255,0.11); transform: translateY(-3px); }
+.proj-card:hover::after { opacity: 1; }
+.proj-num { font-family: var(--mono); font-size: 10px; color: var(--muted); margin-bottom: 0.9rem; }
+.proj-icon { font-size: 26px; margin-bottom: 0.9rem; }
+.proj-title { font-family: var(--serif); font-size: 1.1rem; margin-bottom: 0.6rem; line-height: 1.25; }
+.proj-desc { font-size: 13px; color: rgba(240,240,238,0.48); line-height: 1.7; flex: 1; margin-bottom: 1.1rem; }
+.tags { display: flex; flex-wrap: wrap; gap: 5px; }
+.tag {
+  font-family: var(--mono); font-size: 10px;
+  background: rgba(255,255,255,0.04); border: 1px solid var(--line);
+  border-radius: 4px; padding: 2px 8px; color: var(--muted);
+}
+.tag.hi { background: rgba(200,240,108,0.07); border-color: rgba(200,240,108,0.18); color: var(--accent); }
+.tag.hi2 { background: rgba(126,184,255,0.07); border-color: rgba(126,184,255,0.18); color: var(--accent2); }
+.proj-card.wide { grid-column: span 3; }
+.proj-wide-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+.proj-detail-box { border-radius: 9px; padding: 0.9rem 1.1rem; margin-bottom: 0.75rem; }
+.proj-detail-box.green { background: rgba(200,240,108,0.05); border: 1px solid rgba(200,240,108,0.12); }
+.proj-detail-box.blue  { background: rgba(126,184,255,0.05); border: 1px solid rgba(126,184,255,0.12); }
+.proj-detail-box.gray  { background: rgba(255,255,255,0.03); border: 1px solid var(--line); }
+.proj-detail-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.06em; margin-bottom: 0.35rem; }
+.proj-detail-label.green { color: var(--accent); }
+.proj-detail-label.blue  { color: var(--accent2); }
+.proj-detail-label.gray  { color: var(--muted); }
+.proj-detail-text { font-size: 12.5px; color: var(--text); }
+
+/* SKILLS */
+.skills-wrap { display: grid; grid-template-columns: 200px 1fr; gap: 4rem; align-items: start; }
+.skill-nav { display: flex; flex-direction: column; gap: 4px; }
+.skill-btn {
+  background: none; border: none; cursor: pointer;
+  text-align: left; padding: 0.7rem 1rem;
+  border-radius: 7px; font-family: var(--sans); font-size: 13px;
+  color: var(--muted); transition: all 0.2s; border-left: 2px solid transparent;
+}
+.skill-btn.active, .skill-btn:hover {
+  color: var(--text); background: var(--bg2); border-left-color: var(--accent);
+}
+.skill-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; }
+.skill-pill {
+  background: var(--bg2); border: 1px solid var(--line);
+  border-radius: 8px; padding: 0.7rem 1rem;
+  font-family: var(--mono); font-size: 11.5px; color: var(--text);
+  display: flex; align-items: center; gap: 7px; transition: border-color 0.2s;
+}
+.skill-pill:hover { border-color: rgba(200,240,108,0.25); }
+.skill-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+
+/* CONTACT */
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+.contact-links { display: flex; flex-direction: column; gap: 0.9rem; }
+.contact-link {
+  display: flex; align-items: center; gap: 1.2rem;
+  background: var(--bg2); border: 1px solid var(--line);
+  border-radius: 10px; padding: 1rem 1.3rem;
+  text-decoration: none; transition: border-color 0.2s, transform 0.15s;
+}
+.contact-link:hover { border-color: rgba(200,240,108,0.28); transform: translateX(4px); }
+.contact-icon {
+  width: 34px; height: 34px; border-radius: 8px;
+  background: rgba(200,240,108,0.08);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; flex-shrink: 0;
+}
+.contact-lbl { font-family: var(--mono); font-size: 10px; color: var(--muted); }
+.contact-val { font-size: 13px; color: var(--text); }
+.contact-right p { color: rgba(240,240,238,0.56); line-height: 1.85; margin-bottom: 1.2rem; font-size: 0.95rem; }
+.status-card {
+  background: var(--bg2); border: 1px solid var(--line);
+  border-radius: 12px; padding: 1.4rem; margin-top: 1rem;
+}
+.status-lbl { font-family: var(--mono); font-size: 10px; color: var(--accent); margin-bottom: 0.7rem; letter-spacing: 0.08em; }
+.status-row { display: flex; align-items: center; gap: 9px; margin-bottom: 0.4rem; }
+.status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; flex-shrink: 0; }
+.status-txt { font-size: 13.5px; color: var(--text); }
+.status-sub { font-size: 12px; color: var(--muted); }
+
+/* FOOTER */
+footer {
+  text-align: center; padding: 2.5rem 4rem;
+  border-top: 1px solid var(--line);
+  font-family: var(--mono); font-size: 11px; color: var(--muted);
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  nav { padding: 1rem 1.5rem; }
+  .nav-links { gap: 1.25rem; }
+  .nav-links a { font-size: 11px; }
+  .hero-content { padding: 6rem 1.5rem 3rem; }
+  section { padding: 4rem 1.5rem; }
+  .divider { margin: 0 1.5rem; }
+  .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .projects-grid { grid-template-columns: 1fr; }
+  .proj-card.wide { grid-column: span 1; }
+  .proj-wide-inner { grid-template-columns: 1fr; gap: 1.5rem; }
+  .skills-wrap { grid-template-columns: 1fr; gap: 2rem; }
+  .skill-nav { flex-direction: row; flex-wrap: wrap; }
+  .skill-grid { grid-template-columns: repeat(2, 1fr); }
+  .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#hero">KA_</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-content">
+    <div class="hero-tag">
+      <span class="hero-dot"></span>Available for opportunities
+    </div>
+    <h1>Khaled<br/><em>Asfour</em></h1>
+    <p class="hero-sub">AI &amp; Data Science graduate building intelligent systems — from defense pipelines to deep learning models. Turning complex data into real decisions.</p>
+    <div class="hero-ctas">
+      <a class="btn btn-primary" href="#projects">View My Work</a>
+      <a class="btn btn-ghost" href="#contact">Get in Touch</a>
+    </div>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">01 — About</div>
+  <div class="about-grid">
+    <div class="about-text">
+      <h2 class="section-title">I build systems<br/>that <em style="font-family:'DM Serif Display',serif;font-style:italic;color:rgba(200,240,108,0.62);">think.</em></h2>
+      <p>I'm a Data Science and AI graduate from Al-Hussein Technical University, driven by curiosity and a methodical approach to complex problems. What excites me isn't just building models — it's building ones that work in high-stakes, real-world environments.</p>
+      <p>Currently working as an AI Software Developer at the Jordan Design and Development Bureau, contributing to defense-grade AI systems including autonomous drone pipelines, object detection, and simulation environments alongside senior engineers.</p>
+      <p>When I'm not training models, I'm optimizing them — using everything from Genetic Algorithms to Gradient Descent to squeeze out better performance in production.</p>
+    </div>
+    <div class="about-right">
+      <div class="info-row">
+        <span class="info-label">Location</span>
+        <span class="info-val">Amman, Jordan &#127471;&#127476;</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Degree</span>
+        <span class="info-val">B.S. Data Science &amp; AI — HTU, 2025</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Cert</span>
+        <span class="info-val">Nutanix Certified Associate (NCA)</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Focus</span>
+        <span class="info-val">CV · ML · Simulation · Big Data</span>
+      </div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-meta">July 2024 — Present</div>
+          <div class="tl-role">AI Software Developer</div>
+          <div class="tl-org">Jordan Design and Development Bureau (JODDB)</div>
+          <ul class="tl-list">
+            <li>Multi-AI pipeline for autonomous drone detection, classification &amp; localization</li>
+            <li>Defense AI research paper in preparation for publication</li>
+            <li>Simulation environments &amp; optimization work with senior engineers</li>
+          </ul>
+        </div>
+        <div class="tl-item" style="padding-bottom:0">
+          <div class="tl-dot" style="background:var(--muted);box-shadow:none"></div>
+          <div class="tl-meta">Sep 2021 — Sep 2025</div>
+          <div class="tl-role">B.S. Data Science &amp; Artificial Intelligence</div>
+          <div class="tl-org">Al-Hussein Technical University</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label">02 — Projects</div>
+  <h2 class="section-title">Work that speaks.</h2>
+  <p class="section-sub">A selection of projects spanning defense AI, computer vision, machine learning, and big data analytics.</p>
+  <div class="projects-grid">
+
+    <div class="proj-card">
+      <div class="proj-num">01 / 07</div>
+      <div class="proj-icon">&#127919;</div>
+      <div class="proj-title">Multi-AI Defense Pipeline</div>
+      <div class="proj-desc">Graduation project — integrated object detection, classification, and localization pipeline for tank identification targeting defense applications. Prepared for academic publication.</div>
+      <div class="tags">
+        <span class="tag hi">YOLO</span><span class="tag hi">EfficientNet</span>
+        <span class="tag">PyTorch</span><span class="tag">Computer Vision</span>
+      </div>
+    </div>
+
+    <div class="proj-card">
+      <div class="proj-num">02 / 07</div>
+      <div class="proj-icon">&#128663;</div>
+      <div class="proj-title">Military Vehicle Classifier</div>
+      <div class="proj-desc">Built and benchmarked CNN models (ResNet, EfficientNet) for 5-class military vehicle classification. Achieved high accuracy via transfer learning and fine-tuning.</div>
+      <div class="tags">
+        <span class="tag hi">ResNet</span><span class="tag hi">EfficientNet</span>
+        <span class="tag">CNN</span><span class="tag">TensorFlow</span>
+      </div>
+    </div>
+
+    <div class="proj-card">
+      <div class="proj-num">03 / 07</div>
+      <div class="proj-icon">&#129504;</div>
+      <div class="proj-title">AI Stroke Prediction</div>
+      <div class="proj-desc">Designed and trained ANN and decision tree models to estimate individual stroke probability from clinical features. Focused on clinical interpretability and decision support.</div>
+      <div class="tags">
+        <span class="tag hi">ANN</span><span class="tag">Decision Trees</span>
+        <span class="tag">Scikit-learn</span><span class="tag">Healthcare</span>
+      </div>
+    </div>
+
+    <div class="proj-card">
+      <div class="proj-num">04 / 07</div>
+      <div class="proj-icon">&#127968;</div>
+      <div class="proj-title">Room Occupancy Estimator</div>
+      <div class="proj-desc">Applied Random Forest, SVM, and XGBoost to predict room occupancy from sensor data, enabling intelligent energy optimization in smart buildings.</div>
+      <div class="tags">
+        <span class="tag hi">XGBoost</span><span class="tag">Random Forest</span>
+        <span class="tag">SVM</span><span class="tag">IoT</span>
+      </div>
+    </div>
+
+    <div class="proj-card">
+      <div class="proj-num">05 / 07</div>
+      <div class="proj-icon">&#128225;</div>
+      <div class="proj-title">Telecom Data Mining System</div>
+      <div class="proj-desc">Text and graph mining system for a major telecom company enabling fast retrieval and analysis of complaint-related insights from unstructured data at scale.</div>
+      <div class="tags">
+        <span class="tag hi">NLP</span><span class="tag">Graph Mining</span>
+        <span class="tag">Data Mining</span><span class="tag">Python</span>
+      </div>
+    </div>
+
+    <div class="proj-card">
+      <div class="proj-num">06 / 07</div>
+      <div class="proj-icon">&#9889;</div>
+      <div class="proj-title">Big Data Medical Analytics</div>
+      <div class="proj-desc">Processed and analyzed large-scale medical lab data using Apache Spark, Hadoop, and MapReduce. Built Python visualizations and generated actionable recommendations.</div>
+      <div class="tags">
+        <span class="tag hi">Apache Spark</span><span class="tag">Hadoop</span>
+        <span class="tag">MapReduce</span><span class="tag">Python</span>
+      </div>
+    </div>
+
+    <div class="proj-card wide">
+      <div class="proj-wide-inner">
+        <div>
+          <div class="proj-num">07 / 07</div>
+          <div class="proj-icon">&#128640;</div>
+          <div class="proj-title">YK24 Meteor Missile Simulation</div>
+          <div class="proj-desc">Python-based physics simulation of the YK24 Meteor missile using Euler integration methods. Applied advanced optimization techniques to tune trajectory and performance parameters across complex solution spaces.</div>
+          <div class="tags" style="margin-top:0.9rem">
+            <span class="tag hi">Simulated Annealing</span>
+            <span class="tag hi">Genetic Algorithms</span>
+            <span class="tag">Gradient Descent</span>
+            <span class="tag">Euler Methods</span>
+            <span class="tag">Python</span>
+            <span class="tag">Optimization</span>
+          </div>
+        </div>
+        <div style="padding-top:1.4rem">
+          <div class="proj-detail-box green">
+            <div class="proj-detail-label green">TECHNIQUE 01</div>
+            <div class="proj-detail-text">Simulated Annealing — probabilistic global search, avoids local optima traps</div>
+          </div>
+          <div class="proj-detail-box blue">
+            <div class="proj-detail-label blue">TECHNIQUE 02</div>
+            <div class="proj-detail-text">Genetic Algorithms — evolutionary parameter search across the solution space</div>
+          </div>
+          <div class="proj-detail-box gray">
+            <div class="proj-detail-label gray">TECHNIQUE 03</div>
+            <div class="proj-detail-text">Gradient Descent — fine-tuned convergence on trajectory parameters</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">03 — Skills</div>
+  <h2 class="section-title">Tools of the trade.</h2>
+  <p class="section-sub">Technical stack built across academic research, defense AI, and data engineering.</p>
+  <div class="skills-wrap">
+    <div class="skill-nav">
+      <button class="skill-btn active" onclick="showSkills('languages',this)">Languages</button>
+      <button class="skill-btn" onclick="showSkills('ai',this)">AI &amp; ML</button>
+      <button class="skill-btn" onclick="showSkills('libraries',this)">Libraries</button>
+      <button class="skill-btn" onclick="showSkills('bigdata',this)">Big Data</button>
+      <button class="skill-btn" onclick="showSkills('specialties',this)">Specialties</button>
+    </div>
+    <div class="skill-grid" id="skillGrid"></div>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label">04 — Contact</div>
+  <div class="contact-grid">
+    <div>
+      <h2 class="section-title">Let's connect.</h2>
+      <p class="section-sub" style="margin-bottom:2rem">Open to full-time opportunities in AI, machine learning, and data science. Let's build something meaningful.</p>
+      <div class="contact-links">
+        <a class="contact-link" href="mailto:asfourkhaled92@gmail.com">
+          <div class="contact-icon">&#9993;</div>
+          <div>
+            <div class="contact-lbl">EMAIL</div>
+            <div class="contact-val">asfourkhaled92@gmail.com</div>
+          </div>
+        </a>
+        <a class="contact-link" href="tel:+962799689480">
+          <div class="contact-icon">&#128222;</div>
+          <div>
+            <div class="contact-lbl">PHONE</div>
+            <div class="contact-val">(+962) 799 689 480</div>
+          </div>
+        </a>
+        <a class="contact-link" href="https://github.com/KhaledAsfour03" target="_blank" rel="noopener">
+          <div class="contact-icon">&#128025;</div>
+          <div>
+            <div class="contact-lbl">GITHUB</div>
+            <div class="contact-val">KhaledAsfour03</div>
+          </div>
+        </a>
+        <a class="contact-link" href="#">
+          <div class="contact-icon">&#128205;</div>
+          <div>
+            <div class="contact-lbl">LOCATION</div>
+            <div class="contact-val">Amman, Jordan</div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="contact-right">
+      <p>I'm an AI &amp; Data Science graduate with hands-on experience in defense AI pipelines, computer vision, and large-scale data systems. Looking for an environment where I can do real, impactful work alongside people who take their craft seriously.</p>
+      <p>Whether it's a full-time role, a research collaboration, or an interesting problem worth solving — I'd love to hear about it.</p>
+      <div class="status-card">
+        <div class="status-lbl">CURRENT STATUS</div>
+        <div class="status-row">
+          <span class="status-dot"></span>
+          <span class="status-txt">Available for new opportunities</span>
+        </div>
+        <div class="status-sub">Currently @ JODDB · Open to full-time roles</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span style="color:var(--accent);font-family:'DM Serif Display',serif;font-size:14px">KA_</span>
+  &nbsp;·&nbsp; Khaled Asfour &nbsp;·&nbsp; &copy; 2025 &nbsp;·&nbsp; Amman, Jordan
+</footer>
+
+<!-- HERO CANVAS SCRIPT -->
+<script>
+(function(){
+  const cv = document.getElementById('hero-canvas');
+  const cx = cv.getContext('2d');
+  function resize(){
+    cv.width = cv.offsetWidth;
+    cv.height = cv.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', function(){ resize(); initAll(); });
+
+  function W(){ return cv.width; }
+  function H(){ return cv.height; }
+  var T = 0;
+
+  // STARS
+  var stars = [];
+  function initStars(){
+    stars = [];
+    for(var i=0;i<260;i++){
+      var c = Math.random();
+      stars.push({
+        x:Math.random()*W(), y:Math.random()*H(),
+        r:Math.random()*1.5+0.2,
+        a:Math.random()*0.75+0.1,
+        tw:Math.random()*Math.PI*2,
+        sp:Math.random()*0.025+0.008,
+        color: c>0.88?[200,240,108]:c>0.72?[126,184,255]:[220,222,235]
+      });
+    }
+  }
+
+  // EARTH
+  var ERINGS=13, ESEGS=20;
+  function ER(){ return Math.min(W(),H())*0.23; }
+  function ECX(){ return W()*0.78; }
+  function ECY(){ return H()*0.46; }
+
+  function earthPt(phi,theta,ry){
+    var R=ER();
+    var x=R*Math.sin(phi)*Math.cos(theta);
+    var y=R*Math.cos(phi);
+    var z=R*Math.sin(phi)*Math.sin(theta);
+    var x1=x*Math.cos(ry)-z*Math.sin(ry);
+    var z1=x*Math.sin(ry)+z*Math.cos(ry);
+    return {x:x1, y:y, z:z1};
+  }
+  function proj(p){
+    var fov=W()*2.4, zz=p.z+fov;
+    return {sx:p.x*(fov/zz)+ECX(), sy:p.y*(fov/zz)+ECY(), d:(p.z+ER())/(2*ER())};
+  }
+
+  // ORBITS
+  var orbits=[];
+  function initOrbits(){
+    var R=ER();
+    orbits=[
+      {rx:R*1.38, ry:R*0.52, tilt:0.38,  speed:0.0038, phase:0,   col:'200,240,108', sat:true},
+      {rx:R*1.75, ry:R*0.62, tilt:0.72,  speed:0.0024, phase:2.2, col:'126,184,255', sat:true},
+      {rx:R*2.05, ry:R*0.42, tilt:-0.22, speed:0.0016, phase:4.6, col:'180,210,255', sat:false}
+    ];
+  }
+  function orbitPt(orb,angle){
+    var x=orb.rx*Math.cos(angle);
+    var y=orb.ry*Math.sin(angle)*Math.sin(orb.tilt);
+    var z=orb.ry*Math.sin(angle)*Math.cos(orb.tilt);
+    return {sx:x+ECX(), sy:y+ECY(), z:z};
+  }
+
+  // NEURAL NODES
+  var nodes=[];
+  var nodeSeeds=[
+    [0.08,0.20],[0.05,0.45],[0.14,0.65],[0.22,0.30],
+    [0.30,0.52],[0.12,0.80],[0.25,0.14],[0.36,0.70],
+    [0.04,0.35],[0.18,0.88]
+  ];
+  function initNodes(){
+    nodes=[];
+    for(var i=0;i<nodeSeeds.length;i++){
+      var s=nodeSeeds[i];
+      nodes.push({
+        bx:s[0]*W(), by:s[1]*H(),
+        ox:(Math.random()-0.5)*20, oy:(Math.random()-0.5)*20,
+        ph:Math.random()*Math.PI*2, fr:Math.random()*0.009+0.004,
+        r:Math.random()*2.5+1.5,
+        acc:Math.random()>0.5,
+        _x:0, _y:0
+      });
+    }
+  }
+
+  // AIRCRAFT
+  function drawJet(x,y,sc,ang,al){
+    cx.save(); cx.translate(x,y); cx.rotate(ang); cx.scale(sc,sc);
+    cx.strokeStyle='rgba(200,240,108,'+al+')'; cx.lineWidth=0.9; cx.lineCap='round';
+    cx.beginPath(); cx.moveTo(-22,0); cx.lineTo(22,0); cx.stroke();
+    cx.beginPath(); cx.moveTo(18,0); cx.lineTo(26,-2); cx.lineTo(22,0); cx.stroke();
+    cx.beginPath(); cx.moveTo(2,0); cx.lineTo(-10,-14); cx.lineTo(-14,-14); cx.lineTo(-8,0); cx.stroke();
+    cx.beginPath(); cx.moveTo(2,0); cx.lineTo(-10,14); cx.lineTo(-14,14); cx.lineTo(-8,0); cx.stroke();
+    cx.beginPath(); cx.moveTo(-18,0); cx.lineTo(-22,-7); cx.lineTo(-20,0); cx.stroke();
+    cx.beginPath(); cx.moveTo(-18,0); cx.lineTo(-22,7); cx.lineTo(-20,0); cx.stroke();
+    cx.beginPath(); cx.moveTo(10,0); cx.lineTo(6,-5); cx.lineTo(4,0); cx.stroke();
+    cx.beginPath(); cx.moveTo(10,0); cx.lineTo(6,5); cx.lineTo(4,0); cx.stroke();
+    cx.restore();
+  }
+  function drawDrone(x,y,sc,ang,al){
+    cx.save(); cx.translate(x,y); cx.rotate(ang); cx.scale(sc,sc);
+    cx.strokeStyle='rgba(126,184,255,'+al+')'; cx.lineWidth=0.8; cx.lineCap='round';
+    cx.beginPath(); cx.moveTo(-8,0); cx.lineTo(8,0); cx.stroke();
+    cx.beginPath(); cx.moveTo(0,-8); cx.lineTo(0,8); cx.stroke();
+    var arms=[[-8,-8],[8,-8],[8,8],[-8,8]];
+    for(var i=0;i<arms.length;i++){
+      var ax=arms[i][0], ay=arms[i][1];
+      cx.beginPath(); cx.arc(ax,ay,5,0,Math.PI*2);
+      cx.strokeStyle='rgba(126,184,255,'+(al*0.6)+')'; cx.stroke();
+      cx.strokeStyle='rgba(126,184,255,'+(al*0.3)+')';
+      cx.beginPath(); cx.moveTo(ax-5,ay); cx.lineTo(ax+5,ay); cx.stroke();
+      cx.beginPath(); cx.moveTo(ax,ay-5); cx.lineTo(ax,ay+5); cx.stroke();
+    }
+    cx.strokeStyle='rgba(200,240,108,'+(al*0.9)+')';
+    cx.beginPath(); cx.arc(0,0,3,0,Math.PI*2); cx.stroke();
+    cx.restore();
+  }
+  function drawFixed(x,y,sc,ang,al){
+    cx.save(); cx.translate(x,y); cx.rotate(ang); cx.scale(sc,sc);
+    cx.strokeStyle='rgba(160,200,255,'+al+')'; cx.lineWidth=0.8; cx.lineCap='round';
+    cx.beginPath(); cx.moveTo(-18,0); cx.lineTo(18,0); cx.stroke();
+    cx.beginPath(); cx.moveTo(0,0); cx.lineTo(0,-17); cx.stroke();
+    cx.beginPath(); cx.moveTo(0,0); cx.lineTo(0,17); cx.stroke();
+    cx.beginPath(); cx.moveTo(0,-17); cx.lineTo(3,-15); cx.stroke();
+    cx.beginPath(); cx.moveTo(0,17); cx.lineTo(3,15); cx.stroke();
+    cx.beginPath(); cx.moveTo(-14,0); cx.lineTo(-14,-6); cx.stroke();
+    cx.beginPath(); cx.moveTo(-14,0); cx.lineTo(-14,6); cx.stroke();
+    cx.strokeStyle='rgba(160,200,255,'+(al*0.5)+')';
+    cx.beginPath(); cx.moveTo(18,-4); cx.lineTo(18,4); cx.stroke();
+    cx.restore();
+  }
+
+  // FLEET
+  var fleet=[];
+  function initFleet(){
+    fleet=[
+      {type:'jet',   x:W()*0.55,y:H()*0.12,vx:0.20, vy:0.04,  sc:0.85,al:0.55,ang:0.22,        rot:0},
+      {type:'drone', x:W()*0.82,y:H()*0.74,vx:-0.10,vy:-0.06, sc:0.72,al:0.50,ang:-0.3,         rot:0.009},
+      {type:'fixed', x:W()*0.10,y:H()*0.84,vx:0.15, vy:-0.03, sc:0.88,al:0.45,ang:0.18,         rot:0},
+      {type:'jet',   x:W()*0.62,y:H()*0.90,vx:-0.13,vy:-0.05, sc:0.65,al:0.36,ang:Math.PI+0.15, rot:0},
+      {type:'drone', x:W()*0.40,y:H()*0.06,vx:0.09, vy:0.08,  sc:0.62,al:0.42,ang:0.5,          rot:-0.007}
+    ];
+  }
+
+  // SHOOTERS
+  var shooters=[];
+  setInterval(function(){
+    shooters.push({x:Math.random()*W()*0.6,y:0,vx:2.6+Math.random()*2,vy:1.6+Math.random()*1.5,life:1,tail:[]});
+  },3200);
+
+  function initAll(){ initStars(); initOrbits(); initNodes(); initFleet(); }
+  initAll();
+
+  function draw(){
+    var w=W(), h=H();
+
+    // Space bg
+    var bg=cx.createRadialGradient(ECX(),ECY(),0,ECX(),ECY(),w*0.75);
+    bg.addColorStop(0,'rgba(10,15,30,1)'); bg.addColorStop(1,'rgba(6,8,16,1)');
+    cx.fillStyle=bg; cx.fillRect(0,0,w,h);
+
+    // Nebula
+    var nebulas=[[w*0.78,h*0.35,w*0.22,'rgba(20,55,120,.08)'],[w*0.18,h*0.58,w*0.16,'rgba(15,70,45,.05)']];
+    for(var ni=0;ni<nebulas.length;ni++){
+      var nb=nebulas[ni];
+      var ng=cx.createRadialGradient(nb[0],nb[1],0,nb[0],nb[1],nb[2]);
+      ng.addColorStop(0,nb[3]); ng.addColorStop(1,'rgba(0,0,0,0)');
+      cx.fillStyle=ng; cx.fillRect(0,0,w,h);
+    }
+
+    // Stars
+    for(var si=0;si<stars.length;si++){
+      var s=stars[si];
+      var tw=0.5+0.5*Math.sin(T*s.sp+s.tw);
+      cx.beginPath(); cx.arc(s.x,s.y,s.r*tw,0,Math.PI*2);
+      cx.fillStyle='rgba('+s.color[0]+','+s.color[1]+','+s.color[2]+','+(s.a*tw)+')';
+      cx.fill();
+    }
+
+    // Earth glow
+    var ery=T*0.003;
+    var eg=cx.createRadialGradient(ECX(),ECY(),ER()*0.5,ECX(),ECY(),ER()*1.4);
+    eg.addColorStop(0,'rgba(25,70,180,.12)'); eg.addColorStop(1,'rgba(0,0,0,0)');
+    cx.fillStyle=eg; cx.fillRect(0,0,w,h);
+
+    // Earth lat lines
+    for(var i=0;i<=ERINGS;i++){
+      var phi=(i/ERINGS)*Math.PI;
+      cx.beginPath(); var first=true;
+      for(var j=0;j<=ESEGS;j++){
+        var theta=(j/ESEGS)*Math.PI*2;
+        var p=proj(earthPt(phi,theta,ery));
+        if(first){cx.moveTo(p.sx,p.sy);first=false;}else cx.lineTo(p.sx,p.sy);
+      }
+      var d2=(earthPt(phi,Math.PI/2,ery).z+ER())/(2*ER());
+      cx.strokeStyle=i%3===0?'rgba(126,184,255,'+(0.04+d2*0.3)+')':'rgba(100,145,255,'+(0.02+d2*0.1)+')';
+      cx.lineWidth=i%3===0?0.7:0.35; cx.stroke();
+    }
+    // Earth lon lines
+    for(var j=0;j<=ESEGS;j++){
+      cx.beginPath(); var firstl=true;
+      for(var i=0;i<=ERINGS;i++){
+        var phi2=(i/ERINGS)*Math.PI, theta2=(j/ESEGS)*Math.PI*2;
+        var p2=proj(earthPt(phi2,theta2,ery));
+        if(firstl){cx.moveTo(p2.sx,p2.sy);firstl=false;}else cx.lineTo(p2.sx,p2.sy);
+      }
+      var d3=(earthPt(Math.PI/2,(j/ESEGS)*Math.PI*2,ery).z+ER())/(2*ER());
+      cx.strokeStyle='rgba(100,145,255,'+(0.02+d3*0.08)+')'; cx.lineWidth=0.3; cx.stroke();
+    }
+
+    // Orbits
+    for(var oi=0;oi<orbits.length;oi++){
+      var orb=orbits[oi];
+      orb.phase+=orb.speed;
+      cx.beginPath();
+      for(var a=0;a<=Math.PI*2;a+=0.06){
+        var op=orbitPt(orb,a);
+        if(a===0)cx.moveTo(op.sx,op.sy); else cx.lineTo(op.sx,op.sy);
+      }
+      cx.closePath();
+      cx.strokeStyle='rgba('+orb.col+',.09)'; cx.lineWidth=0.5;
+      cx.setLineDash([3,5]); cx.stroke(); cx.setLineDash([]);
+      if(!orb.sat) continue;
+      var sp=orbitPt(orb,orb.phase);
+      var sg=cx.createRadialGradient(sp.sx,sp.sy,0,sp.sx,sp.sy,9);
+      sg.addColorStop(0,'rgba('+orb.col+',.55)'); sg.addColorStop(1,'rgba(0,0,0,0)');
+      cx.fillStyle=sg; cx.fillRect(sp.sx-9,sp.sy-9,18,18);
+      cx.beginPath(); cx.arc(sp.sx,sp.sy,2.5,0,Math.PI*2);
+      cx.fillStyle='rgba('+orb.col+',1)'; cx.fill();
+      cx.save(); cx.translate(sp.sx,sp.sy);
+      cx.strokeStyle='rgba('+orb.col+',.65)'; cx.lineWidth=0.7;
+      cx.beginPath(); cx.moveTo(-7,0); cx.lineTo(7,0); cx.stroke();
+      var panels=[[-7,-2,4,4],[3,-2,4,4]];
+      for(var pi=0;pi<panels.length;pi++){
+        var pn=panels[pi];
+        cx.beginPath(); cx.rect(pn[0],pn[1],pn[2],pn[3]);
+        cx.fillStyle='rgba('+orb.col+',.14)'; cx.fill();
+        cx.strokeStyle='rgba('+orb.col+',.45)'; cx.stroke();
+      }
+      cx.restore();
+    }
+
+    // Neural nodes update
+    for(var ni2=0;ni2<nodes.length;ni2++){
+      var n=nodes[ni2];
+      n.ph+=n.fr;
+      n._x=n.bx+n.ox*Math.sin(n.ph);
+      n._y=n.by+n.oy*Math.cos(n.ph*0.7);
+    }
+    // Connections
+    for(var i2=0;i2<nodes.length;i2++){
+      for(var j2=i2+1;j2<nodes.length;j2++){
+        var na=nodes[i2], nb2=nodes[j2];
+        var dx=na._x-nb2._x, dy=na._y-nb2._y, dist=Math.sqrt(dx*dx+dy*dy);
+        if(dist<165){
+          cx.beginPath(); cx.moveTo(na._x,na._y); cx.lineTo(nb2._x,nb2._y);
+          cx.strokeStyle='rgba(200,240,108,'+((1-dist/165)*0.18)+')'; cx.lineWidth=0.45; cx.stroke();
+        }
+      }
+    }
+    // Node dots
+    for(var ni3=0;ni3<nodes.length;ni3++){
+      var nd=nodes[ni3];
+      var pulse=0.5+0.5*Math.sin(nd.ph*3);
+      cx.beginPath(); cx.arc(nd._x,nd._y,nd.r*(1+pulse*0.3),0,Math.PI*2);
+      cx.fillStyle=nd.acc?'rgba(200,240,108,'+(0.4+pulse*0.45)+')':'rgba(126,184,255,'+(0.3+pulse*0.3)+')';
+      cx.fill();
+      cx.beginPath(); cx.arc(nd._x,nd._y,nd.r*2.6,0,Math.PI*2);
+      cx.strokeStyle=nd.acc?'rgba(200,240,108,'+(0.07+pulse*0.09)+')':'rgba(126,184,255,0.05)';
+      cx.lineWidth=0.5; cx.stroke();
+    }
+
+    // Fleet
+    for(var fi=0;fi<fleet.length;fi++){
+      var f=fleet[fi];
+      f.x+=f.vx; f.y+=f.vy; f.ang+=f.rot;
+      if(f.x>w+70) f.x=-70; if(f.x<-70) f.x=w+70;
+      if(f.y>h+50) f.y=-50; if(f.y<-50) f.y=h+50;
+      if(f.type==='jet') drawJet(f.x,f.y,f.sc,f.ang,f.al);
+      else if(f.type==='drone') drawDrone(f.x,f.y,f.sc,f.ang,f.al);
+      else drawFixed(f.x,f.y,f.sc,f.ang,f.al);
+      if(f.type!=='drone'){
+        cx.save(); cx.translate(f.x,f.y); cx.rotate(f.ang);
+        var tg=cx.createLinearGradient(-22*f.sc,0,-54*f.sc,0);
+        tg.addColorStop(0,'rgba(200,240,108,'+(f.al*0.45)+')');
+        tg.addColorStop(1,'rgba(200,240,108,0)');
+        cx.beginPath(); cx.moveTo(-22*f.sc,0); cx.lineTo(-54*f.sc,Math.sin(T*0.04)*2.5);
+        cx.strokeStyle=tg; cx.lineWidth=1.2; cx.stroke();
+        cx.restore();
+      }
+    }
+
+    // Shooting stars
+    shooters=shooters.filter(function(s){ return s.life>0; });
+    for(var shi=0;shi<shooters.length;shi++){
+      var sh=shooters[shi];
+      sh.tail.push({x:sh.x,y:sh.y});
+      if(sh.tail.length>22) sh.tail.shift();
+      sh.x+=sh.vx; sh.y+=sh.vy; sh.life-=0.014;
+      if(sh.x>w||sh.y>h) sh.life=0;
+      for(var ti=1;ti<sh.tail.length;ti++){
+        var t=ti/sh.tail.length;
+        cx.beginPath(); cx.moveTo(sh.tail[ti-1].x,sh.tail[ti-1].y); cx.lineTo(sh.tail[ti].x,sh.tail[ti].y);
+        cx.strokeStyle='rgba(215,230,255,'+(t*sh.life*0.75)+')'; cx.lineWidth=t*1.7; cx.stroke();
+      }
+      cx.beginPath(); cx.arc(sh.x,sh.y,1.5,0,Math.PI*2);
+      cx.fillStyle='rgba(255,255,255,'+sh.life+')'; cx.fill();
+    }
+
+    // HUD scan line
+    var scanY=(T*1.1)%h;
+    cx.beginPath(); cx.moveTo(0,scanY); cx.lineTo(w,scanY);
+    cx.strokeStyle='rgba(200,240,108,0.012)'; cx.lineWidth=1; cx.stroke();
+
+    T++;
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+</script>
+
+<!-- SKILLS JS -->
+<script>
+var skillData = {
+  languages:   ['Python','SQL','R','Bash'],
+  ai:          ['Deep Learning','Machine Learning','Computer Vision','NLP','Decision Trees','Neural Networks','Transfer Learning','Model Optimization'],
+  libraries:   ['PyTorch','TensorFlow','Scikit-learn','Pandas','NumPy','Matplotlib','YOLO','EfficientNet'],
+  bigdata:     ['Apache Spark','Hadoop','MapReduce','Big Data Analytics','Data Mining','Text Mining','Graph Mining'],
+  specialties: ['Simulation & Modeling','Genetic Algorithms','Simulated Annealing','Gradient Descent','Technical Writing','Research','Project Collaboration']
+};
+function showSkills(cat, btn){
+  document.querySelectorAll('.skill-btn').forEach(function(b){ b.classList.remove('active'); });
+  if(btn) btn.classList.add('active');
+  document.getElementById('skillGrid').innerHTML =
+    skillData[cat].map(function(s){
+      return '<div class="skill-pill"><span class="skill-dot"></span>'+s+'</div>';
+    }).join('');
+}
+showSkills('languages', document.querySelector('.skill-btn.active'));
+</script>
+
+</body>
+</html>
